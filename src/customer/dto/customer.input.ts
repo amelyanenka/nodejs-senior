@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { Prisma } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 
 @InputType()
 export class WhereCustomerInput {
@@ -9,6 +9,9 @@ export class WhereCustomerInput {
   @Field(() => String, { nullable: true })
   email?: string;
 
+  @Field(() => String, { nullable: true })
+  role?: Role;
+
   @Field(() => Date, { nullable: true })
   createdAt?: Date;
 
@@ -17,7 +20,7 @@ export class WhereCustomerInput {
 }
 
 @InputType()
-export class GetCustomerInput {
+export class GetCustomersInput {
   @Field(() => String, { nullable: true })
   cursor?: Prisma.CustomerWhereUniqueInput;
 
@@ -29,4 +32,40 @@ export class GetCustomerInput {
 
   @Field(() => WhereCustomerInput, { nullable: true })
   where: WhereCustomerInput;
+}
+
+@InputType()
+export class CustomerInput {
+  @Field(() => String, { nullable: true })
+  id?: string;
+
+  @Field(() => String, { nullable: true })
+  email?: string;
+}
+
+@InputType()
+export class CreateCustomerInput {
+  @Field(() => String)
+  email: string;
+
+  @Field(() => String)
+  password: string;
+
+  @Field(() => String, { nullable: true })
+  role?: Role;
+}
+
+@InputType()
+export class UpdateCustomerInput {
+  @Field(() => String, { nullable: true })
+  email?: string;
+
+  @Field(() => String, { nullable: true })
+  password?: string;
+
+  @Field(() => String, { nullable: true })
+  role?: Role;
+
+  @Field(() => Boolean, { nullable: true })
+  isVerified?: boolean;
 }
